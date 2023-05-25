@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>White Ribbon</title>
+  <style type="text/css">
+    @font-face {
+      font-family: HeaderFont;
+      src: url(Rye/Rye-Regular.ttf);
+    }
+
+    @font-face {
+      font-family: BodyFont;
+      src: url(Arimo/Arimo-VariableFont_wght.ttf);
+    }
+
+    body{
+      margin: 0px;
+      display: flex;
+      justify-content: center;
+      background: #444;
+      font-family: HeaderFont;
+      color: #eee;
+      text-align: center;
+    }
+
+    deck{
+      display: flex;
+      width: 80vh;
+      height: 100vh;
+      background: #222;
+      box-sizing: border-box;
+      
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1{
+      font-weight: normal;
+      font-size: 4vh;
+      line-height: 1.3;
+      text-transform: uppercase;
+      margin: 0px;
+    }
+
+    h1 strong{
+      color: #88ccff;
+      font-weight: normal;
+    }
+
+    slide:nth-of-type(1) h1 strong{ color: #9E60D2; }
+    slide:nth-of-type(2) h1 strong{ color: #46D395; }
+    slide:nth-of-type(3) h1 strong{ color: #F19D26; }
+    slide:nth-of-type(4) h1 strong{ color: #E76276; }
+    slide:nth-of-type(5) h1 strong{ color: #F32845; }
+
+    h2{
+      font-family: BodyFont;
+      font-weight: normal;
+      font-size: 2vh;
+      margin: 0px;
+      margin-top: 2vh;
+      color: #bbb;
+    }
+
+    svg{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+    }
+
+    img{
+     
+    }
+
+    slideboard{
+      display: flex;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    slide{
+      white-space: normal;
+      width: 80vh;
+      height: 100vh;
+      display: flex;
+      
+      padding: 10vh;
+      flex-direction: column;
+      box-sizing: border-box;
+      align-content: center;
+      justify-content: center;
+      align-items: center;;
+    }
+
+    slide:nth-of-type(2){ left: 100% }
+
+    span{
+      position: relative;
+    }
+
+    img{
+      position: absolute;
+      bottom: -20vh;
+      height: 70vh;
+
+    }
+
+    spacer{
+      display: inline-flex;
+      height: 50vh;
+    }
+
+    grain{
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-image:url(./grainy.gif);
+      background-size: cover;
+      mix-blend-mode: overlay;
+      opacity: 0.2;
+    }
+
+    endnote{
+      display: block;
+      position: relative;
+    }
+
+    logo{
+      display: flex;
+      height: 30vh;
+      width: 30vh;
+      background-image: url(./barber-shop-logo.png);
+      background-size: 100%;
+      margin-top: 5vh;
+    }
+
+    qr{
+      height: 30vh;
+      width: 30vh;
+      background-image: url(./QR.png);
+      background-size: 25vh;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      border-radius: 1vh;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      margin: auto;
+      display: block;
+      opacity: 0.8;
+    }
+
+    search{
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2vh 3vh 2vh 5.5vh;
+      border-radius: 3vh;
+      box-sizing: border-box;
+      font-size: 2vh;
+
+      color: rgba(255,255,255,0.75);
+      font-family: BodyFont;
+
+
+
+      background-image: url(./search.svg);
+      background-position: 2vh 2vh;
+      background-size: 2.2vh;
+      background-repeat: no-repeat;
+
+      background-color: transparent;
+
+      position: relative;
+    }
+
+    search:after{
+      content: '';
+      display: block;
+      width: 50%;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 25%;
+      border-top: 1px solid white;
+      border-bottom: 1px solid white;
+    }
+
+
+
+    search:after{
+
+      content: "";
+    }
+
+  </style>
+  <script type="text/javascript" src="jq.js"></script>
+  <script type="text/javascript">
+    
+    $(function(){
+
+      let slides = [
+        [
+          "How would you like your friends |to feel| around you?",
+        ],
+        [
+          "I'd like them to feel |accepted| for who they are.",
+          "James, 15, Tawoomba",
+          "sample-image.png",
+        ],
+        [
+          "I want them to feel like I'm |there for them| when it counts.",
+          "Todd, 18, Geelong",
+          "sample-image.png",
+        ],
+        [
+          "I want it to be like they're |inspired| after we hang out.",
+          "Bagnan, 17, Goolwa",
+          "sample-image.png",
+        ],
+        [
+          "How would you like |your friends| to feel around you?",
+        ],
+      ]
+
+      slides = [
+          ['What’s the |ideal version| of you?'],
+          ['I think when I make others feel |comfortable.|',"James, 15, Tawoomba","sample-image.png"],
+          ['When I am |motivated| and |respected.|',"Todd, 18, Geelong","sample-image.png"],
+          ['When I feel good in who I am and can |help others| feel good.',"Bagnan, 17, Goolwa","sample-image.png"],
+          ['What’s the ideal version of |you?|'],
+        ]
+
+      function arcBox(w,h,r,p,p2){
+        return `
+          M ${p+r} ${p} 
+          L ${w-p2} ${p}
+          A ${r} ${r} 0 0 0 ${w-p} ${p2}
+          L ${w-p} ${h-p2}
+          A ${r} ${r} 0 0 0 ${w-p2} ${h-p}
+          L ${p2} ${h-p}
+          A ${r} ${r} 0 0 0 ${p} ${h-p2}
+          L ${p} ${p2}
+          A ${r} ${r} 0 0 0 ${p2} ${p}
+          Z
+        `
+      }
+
+
+
+      $('path').eq(0).attr('d',arcBox(40,50,2,1.5,3.5))
+      $('path').eq(1).attr('d',arcBox(40,50,2.4,2.2,4.1))
+
+
+      
+
+      function splitRender($t,t){
+
+        var arr = t.split(' ');
+        var isBold = false;
+
+        for(var i in arr){
+
+          let r = arr[i];
+          let s = r.replace('|','').replace('|','');
+
+          if(r[0] == '|') isBold = true;
+
+          $('<span>').appendTo($t).html(isBold?'<strong>'+s+' </strong>':s+' ');
+
+          if(r[r.length-1] == '|') isBold = false;
+        }
+      }
+
+      function wordByWord($t){
+        let wasStrong = false;
+        $t.find('span').each(function(){
+
+          const isStrong = $(this).find('strong').length;
+
+          if(wasStrong && !isStrong) slideDuration += 1000;
+
+          $(this).css({opacity:0,top:isStrong?50:0}).delay(slideDuration).animate({color:'red',opacity:1,top:isStrong?-10:0},isStrong?400:800).animate({opacity:1,top:0},400);
+
+          slideDuration += isStrong?200:150;
+
+          wasStrong = isStrong;
+        })
+      }
+
+      function letterByLetter($t){
+        const letters = $t.text().split('');
+        $t.empty();
+        for( var i in letters){
+          $('<span>'+letters[i]+'</span>').appendTo($t).css({opacity:0,'border-right':'2px solid white'}).delay(slideDuration+i*30).animate({opacity:1},20).animate({'border-width':'0px'},10);
+        }
+      }
+
+    
+
+      for(var i=0; i<slides.length; i++){
+        var $slide = $('<slide>').appendTo('slideboard');
+
+        splitRender( $('<h1>').appendTo( $slide ), slides[i][0] );
+
+        if( slides[i][1] ) splitRender( $('<h2>').appendTo( $slide ), slides[i][1] );
+
+        if(slides[i][2]){
+          $('<img src='+slides[i][2]+'>').appendTo($slide);
+          $('<spacer>').appendTo($slide);
+        }
+
+        if(i == slides.length-1){
+
+          var $endnote = $('<endnote>').appendTo($slide);
+
+          $('<logo>').appendTo($endnote);
+          $('<qr>').appendTo($endnote);
+          $('<search>White&nbsp;Ribbon&nbsp;Barber&nbsp;Shop</search>').appendTo($slide);
+        }
+      }
+
+      
+
+      let slideDuration = 0;
+      function animateSlide(n){
+
+        let $slide = $('slide').eq(n);
+        $('slideboard').animate({left:-80*n+'vh'},500);
+
+        slideDuration = 500;
+
+        wordByWord($slide.find('h1'));
+        wordByWord($slide.find('h2'));
+
+        $slide.find('h1').css("transform","rotate("+(-10+n%2*20)+"deg) scale(0.8)").get(0).animate([{"transform": "rotate(0deg) scale(1)"}],{duration: slideDuration,easing:'ease-out',fill: "forwards"});
+
+        if( $slide.find('img').length ) $slide.find('img').get(0).animate([{"transform": "scale(1.2)"}],{duration: slideDuration+500,easing:'ease-out',fill: "forwards"});
+
+        if( $endnote.find('logo').length ){
+          $slide.find('logo').delay(slideDuration+1000).animate({opacity:0},1000);
+          $slide.find('qr').css({opacity:0}).delay(slideDuration+1500).animate({opacity:1},1000);
+          $slide.find('search').css({opacity:0}).delay(slideDuration+2000).animate({opacity:1},500);
+
+          slideDuration += 2500;
+
+          letterByLetter($slide.find('search'));
+        }
+
+        setTimeout( function(){ finaliseSlide(n) }, slideDuration+500 );
+      }
+
+      function finaliseSlide(n){
+        if( n < slides.length-1 ) animateSlide(n+1);
+      }
+
+      animateSlide(0);
+
+      
+      function misalignSelf(){
+        $('slideboard').css({'transform':'translate('+(-1+Math.random()*2)+'px,'+(-1+Math.random()*2)+'px)'})
+
+        setTimeout(misalignSelf,50+Math.random()*500);
+      }
+
+      misalignSelf();
+
+    })
+
+  </script>
+</head>
+<body>
+  <deck>
+    <grain></grain>
+    <slideboard></slideboard>
+    <svg viewbox='0 0 40 50'>
+      <path 
+        vector-effect='non-scaling-stroke'
+        stroke-width='4'
+        stroke='white' 
+        fill='transparent'
+      />
+      <path 
+        vector-effect='non-scaling-stroke'
+        stroke-width='1'
+        stroke='white' 
+        fill='transparent'
+      />
+    </svg>
+  </deck>
+</body>
+</html>
