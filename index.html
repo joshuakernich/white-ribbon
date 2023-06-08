@@ -72,9 +72,6 @@
       bottom: 0px;
     }
 
-    img{
-     
-    }
 
     slideboard{
       display: flex;
@@ -93,20 +90,34 @@
       box-sizing: border-box;
       align-content: center;
       justify-content: center;
-      align-items: center;;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    slide:nth-of-type(2){ left: 100% }
 
     span{
       position: relative;
     }
 
+    pic{
+      
+      width: 1500px;
+      height: 2500px;
+
+      position: absolute;
+      left: 50%;
+      top: 75%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      transform: translate(-50%,-50%) scale(0.2);
+    }
+
     img{
       position: absolute;
-      bottom: -20vh;
-      height: 70vh;
-
+      opacity: 0.7;
     }
 
     spacer{
@@ -200,43 +211,47 @@
       content: "";
     }
 
+
+
   </style>
   <script type="text/javascript" src="jq.js"></script>
   <script type="text/javascript">
     
     $(function(){
 
-      let slides = [
-        [
-          "How would you like your friends |to feel| around you?",
-        ],
-        [
-          "I'd like them to feel |accepted| for who they are.",
-          "James, 15, Tawoomba",
-          "sample-image.png",
-        ],
-        [
-          "I want them to feel like I'm |there for them| when it counts.",
-          "Todd, 18, Geelong",
-          "sample-image.png",
-        ],
-        [
-          "I want it to be like they're |inspired| after we hang out.",
-          "Bagnan, 17, Goolwa",
-          "sample-image.png",
-        ],
-        [
-          "How would you like |your friends| to feel around you?",
-        ],
-      ]
-
-      slides = [
+      const SLIDES_IDEAL = [
           ['What’s the |ideal version| of you?'],
-          ['I think when I make others feel |comfortable.|',"James, 15, Tawoomba","sample-image.png"],
-          ['When I am |motivated| and |respected.|',"Todd, 18, Geelong","sample-image.png"],
-          ['When I feel good in who I am and can |help others| feel good.',"Bagnan, 17, Goolwa","sample-image.png"],
+          ['I think when I make others feel |comfortable.|',"James, 22 - Hobart","./img/fat.png"],
+          ['When I am |motivated| and |respected.|',"Vincent, 17 - Canberra","./img/asian-w-dog.png"],
+          ['When I feel good in who I am and can |help others| feel good.',"Jarrah, 24 - Darwin","./img/indigenous.png"],
           ['What’s the ideal version of |you?|'],
         ]
+
+      const SLIDES_RELATIONSHIP = [
+          ["What does a |good relationship| look like?"],
+          ["No one is hiding a piece of themselves. No one is pretending.","Marc, 25 - Perth","./img/islander.png"],
+          ["It has its ups and downs. You will need to make compromises.","Peter, 23 - Blue Mountains","./img/wheelchair.png"],
+          ["When you are listened to and supported.","Rakesh, 32 - Gold Coast","./img/indian.png"],
+          ["What does a good relationship look like for |you?|"],
+        ]
+
+      const SLIDES_ONLINE = [
+          ["How do you treat people |online?|"],
+          ["I try to treat people with |respect| and see things from their perspective.","Josh, 30 - Melbourne","./img/mullet.png"],
+          ["It's good to avoid getting into |crazy arguments.|","Azul, 24 - Wagga","./img/brazillian.png"],
+          ["I think being |anonymous| makes it easy to act inappropriately at times.","Chu, 23 - Northern Beaches","./img/chubby-asian.png"],
+          ["How do |you| treat people online?"],
+        ]
+
+      let slides =  SLIDES_IDEAL;
+
+      if( window.location.href.includes('ideal') ) slides = SLIDES_IDEAL;
+      if( window.location.href.includes('relationship') ) slides = SLIDES_RELATIONSHIP;
+      if( window.location.href.includes('online') ) slides = SLIDES_ONLINE;
+
+      
+
+      
 
       function arcBox(w,h,r,p,p2){
         return `
@@ -313,7 +328,7 @@
         if( slides[i][1] ) splitRender( $('<h2>').appendTo( $slide ), slides[i][1] );
 
         if(slides[i][2]){
-          $('<img src='+slides[i][2]+'>').appendTo($slide);
+          $('<pic><img src='+slides[i][2]+'></pic>').appendTo($slide);
           $('<spacer>').appendTo($slide);
         }
 
@@ -326,8 +341,6 @@
           $('<search>White&nbsp;Ribbon&nbsp;Barber&nbsp;Shop</search>').appendTo($slide);
         }
       }
-
-      
 
       let slideDuration = 0;
       function animateSlide(n){
